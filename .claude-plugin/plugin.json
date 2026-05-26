@@ -1,7 +1,7 @@
 {
   "name": "astro-layer",
-  "version": "2.0.0",
-  "description": "AI layer for building beautiful small-business Astro 6.3 websites — design tokens, 8-section library, GSAP, Vercel, SEO, self-improving hooks.",
+  "version": "2.1.0",
+  "description": "AI layer for building beautiful, unique small-business Astro 6.3 websites — design-direction skill, 12 aesthetic archetypes, section layout variants, anti-generic system, SEO, Vercel.",
   "author": { "name": "Bizzet" },
   "license": "MIT",
   "mcpServers": {
