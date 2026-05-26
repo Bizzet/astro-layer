@@ -1,6 +1,95 @@
 # Animation Patterns
 
-## Setup (First Invocation)
+**Default:** pure CSS keyframes. No install, no JS.
+**Advanced:** GSAP — only when explicitly requested or when CSS can't handle the complexity.
+
+---
+
+## CSS Animations (Default)
+
+No install. Add to a component's `<style>` block or `src/styles/global.css`.
+
+### Reduced-Motion Block
+
+Always include in global CSS:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+### Fade-In on Scroll (Scroll-Driven Animation)
+
+```css
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  animation: fadeInUp 0.6s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+```
+
+Add `class="reveal"` to any element that should animate when it enters the viewport.
+
+> **Browser support:** `animation-timeline: view()` is Chrome 115+, Firefox 114+, Safari 18+. For older browsers, use the GSAP scroll reveal below.
+
+### Entrance Slide-Up (Page Load)
+
+```css
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(2rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content {
+  animation: slideUp 0.6s ease-out both;
+}
+```
+
+### Stagger via animation-delay (nth-child)
+
+```css
+.stagger-grid > * {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.stagger-grid > *:nth-child(1) { animation-delay:   0ms; }
+.stagger-grid > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-grid > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-grid > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-grid > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-grid > *:nth-child(6) { animation-delay: 500ms; }
+```
+
+Add `class="stagger-grid"` to any grid container.
+
+### Reduced-Motion Override (Component Level)
+
+```css
+.hero-content {
+  animation: slideUp 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content { animation: none; }
+}
+```
+
+---
+
+## Advanced — GSAP (Explicit Opt-in Only)
+
+Use GSAP when the user explicitly asks for it, or when the animation requires timeline sequencing, animated counters, or stagger on JS-rendered content that CSS can't handle cleanly.
+
+### Setup (First Use)
 
 Install GSAP and create the animation script:
 
@@ -12,7 +101,7 @@ Create `src/scripts/animations.ts`.
 
 ---
 
-## Reduced Motion Guard — Always Check First
+### Reduced Motion Guard — Always Check First
 
 ```ts
 // src/scripts/animations.ts
@@ -32,7 +121,7 @@ export function initAnimations() {
 
 ---
 
-## Entrance Animations
+### Entrance Animations
 
 ```ts
 function initEntrances() {
@@ -48,7 +137,7 @@ function initEntrances() {
 
 ---
 
-## Scroll-Triggered Reveals
+### Scroll-Triggered Reveals
 
 ```ts
 function initScrollReveals() {
@@ -72,7 +161,7 @@ Add `class="reveal"` to any element you want to animate on scroll.
 
 ---
 
-## Stagger for Grids
+### Stagger for Grids
 
 ```ts
 function initStaggerGrids() {
@@ -98,7 +187,7 @@ Add `class="stagger-grid"` to any grid container.
 
 ---
 
-## Counter for Stats
+### Counter for Stats
 
 ```ts
 function initCounters() {
@@ -127,7 +216,7 @@ Usage in component: `<span data-count="150">0</span>`
 
 ---
 
-## View Transition Hook
+### View Transition Hook
 
 GSAP ScrollTrigger needs to be re-initialized after Astro page transitions:
 
@@ -145,7 +234,7 @@ document.addEventListener('astro:page-load', () => {
 
 ---
 
-## Usage in Astro Components
+### Usage in Astro Components
 
 ```astro
 ---
@@ -164,28 +253,3 @@ document.addEventListener('astro:page-load', () => {
   initAnimations();
 </script>
 ```
-
----
-
-## CSS-Only Alternatives (Prefer These When Possible)
-
-Some animations don't need GSAP:
-
-```css
-/* Fade-in on load (no JS) */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(1rem); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.hero-content {
-  animation: fadeIn 0.6s var(--ease-out) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-content { animation: none; }
-}
-```
-
-**Use CSS animations for:** page load, hover effects, focus indicators
-**Use GSAP for:** scroll-triggered, staggered, counter, complex sequences

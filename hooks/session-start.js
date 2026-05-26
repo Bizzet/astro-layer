@@ -68,6 +68,16 @@ function getGitActivity() {
   }
 }
 
+function getPlanTasks() {
+  const planMd = safeRead(join(cwd, 'PLAN.md'));
+  if (!planMd) return null;
+  const incomplete = planMd
+    .split('\n')
+    .filter((line) => line.includes('- [ ]'))
+    .map((line) => line.trim().replace(/^-\s*\[\s*\]\s*/, '').trim());
+  return incomplete.length > 0 ? incomplete : null;
+}
+
 function formatBuildState(state) {
   if (!state || state.status === 'complete') return null;
 
@@ -94,6 +104,7 @@ const projectName = getProjectName();
 const astroVersion = getAstroVersion();
 const buildState = readBuildState(cwd);
 const buildBlock = formatBuildState(buildState);
+const planTasks = getPlanTasks();
 const git = getGitActivity();
 
 const lines = ['=== Astro Layer: Session Start ==='];
@@ -105,6 +116,12 @@ else lines.push('Astro version: 6.3 (target)');
 if (buildBlock) {
   lines.push('');
   lines.push(buildBlock);
+}
+
+if (planTasks) {
+  lines.push('');
+  lines.push(`Open tasks (PLAN.md — ${planTasks.length} remaining):`);
+  for (const task of planTasks) lines.push(`  • ${task}`);
 }
 
 if (git) {

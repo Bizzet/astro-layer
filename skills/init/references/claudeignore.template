@@ -4,3 +4,4 @@ node_modules/
 public/fonts/
 *.min.js
 *.min.css
+# BRIEF.md and PLAN.md are persistent session artifacts — do not add them here

@@ -1,5 +1,28 @@
 # Site Brief Reference
 
+## Brief Protocol — Five Required Questions
+
+When Phase 0 Q&A is needed, ask exactly these five questions. Map single-prompt content to these fields; note inferred vs missing.
+
+1. **Business type & name** — what do they do and what are they called?
+2. **The one action** — what should a visitor do when they land on the site?
+3. **The differentiator** — what keeps customers coming back that competitors can't honestly say about themselves?
+4. **The customer** — describe the best customer as a person: who are they, and why did they choose this business over others?
+5. **Look, feel & assets** — a reference site with the right feeling, what to avoid, and what content already exists (photos, logo, reviews)
+
+## Scraping Existing Sites
+
+If the client mentions an existing site URL or reference site, scrape it with Firecrawl and auto-populate the brief before asking any questions.
+
+**What to extract:**
+- Existing copy: headlines, service descriptions, about text
+- Page structure and navigation items
+- Contact info: address, phone, email
+- Business hours
+- Any photos, logos, or assets referenced
+
+**How to use:** Populate brief fields from scraped content, noting what was scraped vs what was provided. Only ask questions for fields that couldn't be filled from the scrape.
+
 ## Industry → Color Mapping
 
 | Industry | Brand Hue | Tone | Notes |

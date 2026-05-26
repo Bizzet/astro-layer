@@ -8,6 +8,15 @@
     "astro-search": {
       "command": "node",
       "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/astro-search.js"]
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": { "FIRECRAWL_API_KEY": "" }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     }
   }
 }
