@@ -11,7 +11,7 @@
       "displayName": "Astro Layer",
       "source": "./",
       "description": "Gives Claude everything it needs to build complete, beautiful small-business Astro 6.3 websites autonomously. Vanilla CSS design tokens, 8-section business library, GSAP animations (opt-in), Vercel deployment, SEO with LocalBusiness JSON-LD, and a self-improving AI layer validated end-to-end.",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "author": {
         "name": "Bizzet"
       },
