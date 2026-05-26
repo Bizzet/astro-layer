@@ -216,6 +216,225 @@ Usage in component: `<span data-count="150">0</span>`
 
 ---
 
+### Scroll Storytelling — Pinned Section with Scrub
+
+A section pins to the viewport while the user scrolls through it. Content transforms — text changes, images swap, progress fills — fully synced to scroll position. The signature pattern of premium landing pages.
+
+```ts
+// src/scripts/scroll-story.ts
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function initScrollStory() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const section = document.querySelector<HTMLElement>('.scroll-story');
+  if (!section) return;
+
+  const steps  = gsap.utils.toArray<HTMLElement>('.story-step');
+  const visuals = gsap.utils.toArray<HTMLElement>('.story-visual');
+
+  // Pin the section for the full scroll-through
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top top',
+    end: `+=${steps.length * 100}%`,
+    pin: true,
+    pinSpacing: true,
+  });
+
+  // Each step cross-fades in as user scrolls to that segment
+  steps.forEach((step, i) => {
+    const progress = i / steps.length;
+    const nextProgress = (i + 1) / steps.length;
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: `top+=${progress * steps.length * 100}% top`,
+      end: `top+=${nextProgress * steps.length * 100}% top`,
+      onEnter()      { activateStep(i, steps, visuals); },
+      onEnterBack()  { activateStep(i, steps, visuals); },
+    });
+  });
+
+  activateStep(0, steps, visuals);
+}
+
+function activateStep(
+  index: number,
+  steps: HTMLElement[],
+  visuals: HTMLElement[]
+) {
+  steps.forEach((s, i) => s.classList.toggle('is-active', i === index));
+  visuals.forEach((v, i) => {
+    gsap.to(v, {
+      opacity: i === index ? 1 : 0,
+      scale:   i === index ? 1 : 0.96,
+      duration: 0.5,
+      ease: 'power2.out',
+    });
+  });
+}
+```
+
+HTML structure:
+
+```astro
+<section class="scroll-story" aria-label="How it works">
+  <div class="story-layout">
+
+    <!-- Left: text steps -->
+    <div class="story-steps">
+      {steps.map((step, i) => (
+        <div class={`story-step ${i === 0 ? 'is-active' : ''}`}>
+          <span class="story-step-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{step.headline}</h3>
+          <p>{step.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Right: visuals swap -->
+    <div class="story-visuals" aria-hidden="true">
+      {steps.map((step, i) => (
+        <div class={`story-visual ${i === 0 ? 'is-visible' : ''}`}>
+          <Image src={step.image} alt="" width={700} height={500} />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+```
+
+```css
+.scroll-story {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max);
+  padding-inline: var(--container-padding);
+}
+
+.story-step {
+  opacity: 0.3;
+  transform: translateX(-1rem);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  padding-block: var(--space-6);
+}
+
+.story-step.is-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.story-step-num {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--color-brand);
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-3);
+}
+
+.story-visuals { position: relative; aspect-ratio: 7/5; }
+
+.story-visual {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.story-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 48rem) {
+  .story-layout { grid-template-columns: 1fr; }
+  .story-visuals { display: none; }
+}
+```
+
+---
+
+### Horizontal Scroll Section (Pinned)
+
+A section pins and content scrolls horizontally. Used for timelines, case study carousels, or feature showcases.
+
+```ts
+export function initHorizontalScroll() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const track = document.querySelector<HTMLElement>('.h-scroll-track');
+  if (!track) return;
+
+  const totalWidth = track.scrollWidth - track.offsetWidth;
+
+  gsap.to(track, {
+    x: -totalWidth,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.h-scroll-section',
+      start: 'top top',
+      end: `+=${totalWidth}`,
+      pin: true,
+      scrub: 1,
+    },
+  });
+}
+```
+
+```astro
+<section class="h-scroll-section">
+  <div class="h-scroll-track">
+    {items.map((item) => (
+      <article class="h-scroll-card">
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+      </article>
+    ))}
+  </div>
+</section>
+```
+
+```css
+.h-scroll-section {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.h-scroll-track {
+  display: flex;
+  gap: var(--space-8);
+  width: max-content;
+  padding-inline: var(--container-padding);
+  align-items: center;
+  height: 100%;
+}
+
+.h-scroll-card {
+  width: min(28rem, 80vw);
+  flex-shrink: 0;
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: var(--border);
+}
+```
+
+---
+
 ### View Transition Hook
 
 GSAP ScrollTrigger needs to be re-initialized after Astro page transitions:

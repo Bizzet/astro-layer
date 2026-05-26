@@ -230,6 +230,113 @@ const { headline, subheadline, ctaPrimary, ctaSecondary, image, imageAlt } = Ast
 
 ---
 
+### Hero — Variant D: Typographic Statement
+
+No image. The headline IS the visual. Oversized type floods the viewport, breaking the container to bleed toward the edges. Text scale is the composition. Use when the brand name or headline is inherently powerful.
+
+**Best for:** Editorial, Brutalist, Luxury/Refined, Minimal/Clean, Art Deco/Geometric.
+
+```astro
+---
+interface Props {
+  headline: string;
+  subheadline: string;
+  ctaPrimary: { label: string; href: string };
+  eyebrow?: string;
+}
+const { headline, subheadline, ctaPrimary, eyebrow } = Astro.props;
+// Split headline into two lines for layout control
+const [line1, ...rest] = headline.split('|');
+const line2 = rest.join('|');
+---
+<section class="hero hero--statement" transition:animate="fade">
+  <div class="hero-statement-inner">
+    {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+    <h1 class="hero-statement-headline" aria-label={headline}>
+      <span class="statement-line statement-line--1">{line1}</span>
+      {line2 && <span class="statement-line statement-line--2">{line2}</span>}
+    </h1>
+    <div class="hero-statement-footer">
+      <p class="hero-sub">{subheadline}</p>
+      <a href={ctaPrimary.href} class="btn btn--primary">{ctaPrimary.label}</a>
+    </div>
+  </div>
+</section>
+```
+
+Use `|` in the headline prop to control line breaks: `headline="We build|what lasts."` 
+
+```css
+.hero--statement {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-8) var(--container-padding) var(--space-12);
+  border-bottom: var(--border);
+  overflow: hidden;
+}
+
+.hero-statement-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.hero-statement-headline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-block: var(--space-8);
+}
+
+.statement-line {
+  display: block;
+  font-size: clamp(4rem, 12vw, 10rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-bold);
+}
+
+/* Second line: offset right for visual tension */
+.statement-line--2 {
+  padding-left: clamp(2rem, 8vw, 10rem);
+  color: var(--color-brand); /* or: font-style: italic; font-weight: 300; */
+}
+
+.hero-statement-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: var(--border);
+  flex-wrap: wrap;
+}
+
+.hero-statement-footer .hero-sub {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  max-width: 32rem;
+}
+
+.hero-eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 48rem) {
+  .statement-line { font-size: clamp(3rem, 14vw, 5rem); }
+  .statement-line--2 { padding-left: var(--space-6); }
+  .hero-statement-footer { flex-direction: column; align-items: flex-start; }
+}
+```
+
+---
+
 ## Services
 
 **Purpose:** Display service offerings in a scannable layout.
@@ -420,6 +527,184 @@ Each service takes full width, alternating image-left / text-right. For 2–4 se
 
 ---
 
+### Services — Variant D: Magazine Feature Layout
+
+One service dominates the viewport as a full-width feature with oversized type and an image. Remaining services appear as a compact row beneath. Creates a deliberate hierarchy — the hero service leads.
+
+**Best for:** Luxury/Refined, Editorial, Dark/Moody, Art Deco/Geometric.
+
+```astro
+---
+import { Image } from 'astro:assets';
+interface Props {
+  headline?: string;
+  services: Array<{
+    title: string;
+    description: string;
+    icon: string;
+    href?: string;
+    image?: ImageMetadata;
+    imageAlt?: string;
+    featured?: boolean;
+  }>;
+}
+const { headline, services } = Astro.props;
+const featured = services.find(s => s.featured) ?? services[0];
+const rest = services.filter(s => s !== featured);
+---
+<section class="services services--magazine" transition:animate="fade">
+  <div class="container">
+    {headline && (
+      <header class="services-magazine-header">
+        <h2>{headline}</h2>
+        <span class="services-count">{String(services.length).padStart(2, '0')} services</span>
+      </header>
+    )}
+
+    <!-- Featured service -->
+    <div class="service-feature">
+      <div class="service-feature-body">
+        <span class="service-feature-tag" aria-hidden="true">{featured.icon}</span>
+        <h3 class="service-feature-title">{featured.title}</h3>
+        <p class="service-feature-desc">{featured.description}</p>
+        {featured.href && (
+          <a href={featured.href} class="btn btn--primary">Learn more</a>
+        )}
+      </div>
+      {featured.image && (
+        <div class="service-feature-media">
+          <Image
+            src={featured.image}
+            alt={featured.imageAlt ?? ''}
+            width={700}
+            height={500}
+            class="service-feature-image"
+          />
+        </div>
+      )}
+    </div>
+
+    <!-- Remaining services -->
+    {rest.length > 0 && (
+      <ul role="list" class="services-rest">
+        {rest.map((service) => (
+          <li class="service-rest-item">
+            <span aria-hidden="true">{service.icon}</span>
+            <div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+            {service.href && (
+              <a href={service.href} class="service-link" aria-label={`Learn more about ${service.title}`}>→</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+```
+
+```css
+.services--magazine { padding-block: var(--space-20); }
+
+.services-magazine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--space-6);
+  border-bottom: 2px solid var(--color-text);
+  margin-bottom: var(--space-12);
+}
+
+.services-magazine-header h2 { font-size: var(--text-3xl); letter-spacing: var(--tracking-tight); }
+
+.services-count {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+  font-variant-numeric: tabular-nums;
+}
+
+.service-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  padding-block: var(--space-12);
+  border-bottom: var(--border);
+  margin-bottom: var(--space-12);
+}
+
+.service-feature-tag {
+  display: block;
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-4);
+}
+
+.service-feature-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+.service-feature-desc {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 36rem;
+  margin-bottom: var(--space-8);
+}
+
+.service-feature-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7/5;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.services-rest {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 0;
+}
+
+.service-rest-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  gap: var(--space-4);
+  align-items: start;
+  padding-block: var(--space-6);
+  border-bottom: var(--border);
+}
+
+.service-rest-item:first-child { border-top: var(--border); }
+
+.service-rest-item span:first-child { font-size: var(--text-xl); padding-top: 2px; }
+
+.service-rest-item h3 { font-size: var(--text-base); font-weight: var(--font-semibold); margin-bottom: var(--space-1); }
+.service-rest-item p { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.service-rest-item .service-link {
+  font-size: var(--text-lg);
+  color: var(--color-brand);
+  text-decoration: none;
+  padding-top: 2px;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.service-rest-item .service-link:hover { transform: translateX(4px); }
+
+@media (max-width: 48rem) {
+  .service-feature { grid-template-columns: 1fr; }
+  .service-feature-media { order: -1; }
+}
+```
+
+---
+
 ## About
 
 **Purpose:** Business story, team introduction, trust signals.
@@ -600,6 +885,160 @@ const { headline, body, pullQuote, trustSignals } = Astro.props;
   color: var(--color-text);
 }
 @media (max-width: 48rem) { .about-text-inner { grid-template-columns: 1fr; } }
+```
+
+---
+
+### About — Variant D: Asymmetric Layered
+
+Image and text overlap in a deliberate composition — image bleeds off one edge, text floats over it at an offset. The layout itself communicates confidence. No symmetric grid, no playing it safe.
+
+**Best for:** Luxury/Refined, Art Deco/Geometric, Editorial, Dark/Moody, Retro-Futuristic.
+
+```astro
+---
+import { Image } from 'astro:assets';
+interface Props {
+  headline: string;
+  body: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  stat?: { value: string; label: string };
+  trustSignals?: string[];
+}
+const { headline, body, image, imageAlt, stat, trustSignals } = Astro.props;
+---
+<section class="about about--layered" transition:animate="fade">
+  <div class="container about-layered-inner">
+
+    <!-- Image: oversized, bleed left -->
+    <div class="about-layered-media">
+      <Image
+        src={image}
+        alt={imageAlt}
+        width={700}
+        height={900}
+        class="about-layered-image"
+      />
+      {stat && (
+        <div class="about-stat" aria-label={`${stat.value} ${stat.label}`}>
+          <span class="about-stat-value">{stat.value}</span>
+          <span class="about-stat-label">{stat.label}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- Text: overlaps image, offset top -->
+    <div class="about-layered-content">
+      <h2>{headline}</h2>
+      <p>{body}</p>
+      {trustSignals && (
+        <ul class="trust-signals" role="list">
+          {trustSignals.map((signal) => <li>{signal}</li>)}
+        </ul>
+      )}
+    </div>
+
+  </div>
+</section>
+```
+
+```css
+.about--layered {
+  padding-block: var(--space-20);
+  overflow: hidden;
+}
+
+.about-layered-inner {
+  display: grid;
+  grid-template-columns: 55% 1fr;
+  align-items: start;
+  position: relative;
+}
+
+/* Image bleeds left past container */
+.about-layered-media {
+  position: relative;
+  margin-left: calc(-1 * var(--container-padding));
+}
+
+.about-layered-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7/9;
+  object-fit: cover;
+  display: block;
+}
+
+/* Stat badge: floats over image bottom-right corner */
+.about-stat {
+  position: absolute;
+  bottom: var(--space-8);
+  right: calc(-1 * var(--space-10));
+  background: var(--color-brand);
+  color: var(--color-surface);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  text-align: center;
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+}
+
+.about-stat-value {
+  display: block;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: 1;
+}
+
+.about-stat-label {
+  display: block;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-top: var(--space-1);
+}
+
+/* Text panel: offset downward to create overlap with image */
+.about-layered-content {
+  padding: var(--space-20) var(--space-8) var(--space-8) var(--space-12);
+  position: relative;
+  z-index: 1;
+}
+
+.about-layered-content h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-6);
+}
+
+.about-layered-content p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.trust-signals {
+  list-style: none;
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.trust-signals li::before {
+  content: '→ ';
+  color: var(--color-brand);
+  font-weight: var(--font-bold);
+}
+
+@media (max-width: 48rem) {
+  .about-layered-inner { grid-template-columns: 1fr; }
+  .about-layered-media { margin-left: 0; }
+  .about-stat { right: var(--space-4); }
+  .about-layered-content { padding: var(--space-10) 0 0; }
+}
 ```
 
 ---

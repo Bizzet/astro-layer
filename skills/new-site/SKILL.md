@@ -126,7 +126,11 @@ BRIEF.md and PLAN.md are already written. Now:
 1. Copy `starter/` to target directory
 2. Update `astro.config.mjs` site URL
 3. Adjust `--color-brand` tokens for industry (see site-brief.md)
-4. Generate `CLAUDE.md` hierarchy and `SITE_MAP.md` via `init` patterns
+4. Generate `CLAUDE.md` hierarchy and `SITE_MAP.md` following the `init` skill (see `skills/init/SKILL.md` steps 3–5). All four files are required:
+   - `CLAUDE.md` — root context (from `skills/init/references/CLAUDE.root.md`)
+   - `src/components/CLAUDE.md` — component conventions
+   - `src/pages/CLAUDE.md` — page conventions
+   - `src/styles/CLAUDE.md` — token catalog populated from actual `tokens.css`
 5. Initialize build state at `.claude/build-state.json`:
 
 ```json

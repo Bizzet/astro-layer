@@ -128,4 +128,6 @@ document.addEventListener('astro:page-load', () => {
 
 ## Reference
 
-See `references/animation-patterns.md` for complete CSS patterns, full GSAP `animations.ts` scaffold, and View Transitions integration.
+- `references/animation-patterns.md` — complete CSS patterns, GSAP scaffold, scroll storytelling (pinned sections, horizontal scroll), View Transitions integration
+- `references/kinetic-type.md` — kinetic typography: word-by-word stagger, clip-path wipe, variable font morph, blur focus-in, character pop, GSAP line reveals and hero sequences, typewriter scrub
+- `references/interactions.md` — creative hover and cursor patterns: magnetic buttons, color flood fill, underline draw-on, grayscale-to-color, card tilt, custom cursor, JS magnetic tracking, cursor-following image reveal

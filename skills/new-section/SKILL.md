@@ -54,4 +54,5 @@ Every section has multiple layout variants in `references/sections.md`. **Do not
 
 ## Reference
 
-See `references/sections.md` for complete HTML/CSS/Props patterns, layout variants, and atmosphere patterns for all 8 sections.
+- `references/sections.md` — complete HTML/CSS/Props for all 8 sections, 3–4 layout variants each (including bold "statement" Variant D for Hero, Services, About), atmosphere patterns
+- `references/section-transitions.md` — geometric dividers (wave SVG, angled cut, curved bottom, torn paper), overlapping sections, color bands, scroll-activated background shift; archetype recommendation table

@@ -35,10 +35,5 @@ Every component created by this skill must:
 
 ## Reference
 
-See `references/component-patterns.md` for:
-- Required structure template
-- Props naming rules
-- CSS conventions
-- SVG handling rule
-- ARIA patterns by component type (button, dialog, nav, accordion, card)
-- Naming conventions
+- `references/component-patterns.md` — required structure, Props naming, CSS conventions, SVG rule, ARIA patterns, naming conventions
+- `references/depth-and-blend.md` — mix-blend-mode on text/images, duotone effects, color overlay with blend, glass morphism, overlapping elements (z-axis composition), noise grain texture, CSS gradient noise, scroll parallax on images; archetype usage guide
