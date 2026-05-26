@@ -143,6 +143,16 @@ node tooling/validate-all.js   # expects 15/15
 
 ---
 
+## Changelog: v2.4.0
+
+| Area | Change |
+|---|---|
+| `color-system.md` | New dual-color pairing system: trigger checklist, three derivation methods (split-complementary ±150°, triadic ±120°, intuitive clash >90°), saturation/lightness alignment rules, role distribution (brand dominates, accent punctuates at ~half frequency), and `--color-accent` / `--color-accent-hover` / `--color-accent-subtle` token structure |
+| `archetypes.md` | Accent pairing notes added to Brutalist (both 90–100% sat against gray), Playful (triadic, canonical pairings listed), Retro-Futuristic (split-comp neons, both glow), Editorial (optional, intuitive clash only, accent off CTAs) |
+| `design-direction` SKILL | Step 6 now includes an explicit accent decision step before writing `tokens.css`; design brief palette field updated to record pairing method and role |
+
+---
+
 ## Changelog: v2.3.0
 
 | Area | Change |

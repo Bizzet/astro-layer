@@ -54,6 +54,67 @@ Dark-base archetypes (Luxury, Retro-Futuristic, Tech-Industrial, Art Deco, Dark/
 
 ---
 
+## Dual-color pairing system
+
+Use a second accent color (`--color-accent`) when the concept demands energy, contrast, or unexpectedness that a single brand color can't deliver. This is not decoration — it is a structural decision that affects hierarchy and identity.
+
+### When to introduce a second accent
+
+Introduce `--color-accent` when **two or more** of these are true:
+- The brand adjectives include words like "energetic," "bold," "unexpected," "vivid," "playful," or "electric"
+- The archetype is Brutalist, Playful/Toy-like, or Retro-Futuristic
+- The concept sentence describes tension between two contrasting qualities
+- The anti-adjectives rule out "safe" or "corporate" — meaning the palette must take a risk
+
+Do NOT add a second accent for Editorial, Luxury, Minimal/Clean, or Coastal/Airy unless the concept specifically demands it. Those archetypes derive power from restraint.
+
+### How to derive the accent hue
+
+Three valid pairing methods — choose based on the emotional register:
+
+| Method | Formula | Result | Use when |
+|---|---|---|---|
+| **Split-complementary** | brand hue ± 150° | High contrast, less tension than direct complement | Most cases — feels bold but resolved |
+| **Triadic** | brand hue + 120° or − 120° | Vibrant, equal-energy feel | Playful, Retro-Futuristic, maximum energy |
+| **Intuitive clash** | Pick a hue that shares the concept's emotional charge but occupies distant territory (>90° away) | Unexpected but purposeful | When split-comp or triadic feel too mechanical |
+
+**Examples of valid pairings:**
+- Orange (25°) + lime green (85°) — triadic, max energy, Playful/Brutalist
+- Electric cyan (175°) + hot pink (320°) — split-complementary, Retro-Futuristic
+- Burnt sienna (12°) + teal (175°) — intuitive clash, Editorial with unexpected tension
+- Neon yellow (58°) + violet (268°) — triadic, Brutalist
+
+**Saturation alignment rule:** The accent saturation must be within 15% of the brand saturation. Two vivid colors of equal saturation feel intentional. A vivid color paired with a muted one feels like an accident.
+
+**Lightness alignment rule:** On light base — both accent and brand should be 38–55% lightness. On dark base — both should be 45–62%.
+
+### Role distribution
+
+Never let two accent colors compete equally for dominance. Assign roles before writing CSS:
+
+| Role | Color | Usage |
+|---|---|---|
+| **Primary** | `--color-brand` | CTAs, key links, active states, dominant accent elements |
+| **Secondary** | `--color-accent` | Highlights, tags, decorative elements, hover states on brand elements |
+| **Background / field** | Neutrals | 60–70% of visible area — keeps the pairing readable |
+
+The secondary accent should appear at roughly half the frequency of the primary. If they feel equal in weight, reduce the secondary's lightness by 8% or its usage by half.
+
+### Token structure for dual-color palettes
+
+Add these tokens immediately after the brand block:
+
+```css
+/* ── Accent (only when dual-color pairing is active) ── */
+--color-accent:        hsl(AH AS% AL%);
+--color-accent-hover:  hsl(AH AS% calc(AL% - 8%));
+--color-accent-subtle: hsl(AH AS% [96% light / 10% dark]);
+```
+
+**Key:** AH = accent hue, AS = accent saturation, AL = accent lightness. Derive from the pairing method above.
+
+---
+
 ## Complete tokens.css structure
 
 Use this structure every time. Fill in the HSL values from the derivation above. The structure never changes — only the values do.

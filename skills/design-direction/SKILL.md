@@ -133,7 +133,8 @@ Using the archetype's token recipe from `references/archetypes.md`:
 
 1. **Vary the hue** — Do not use the archetype's example hue verbatim. Shift it 10–40 degrees to make this instance unique. Use business context to motivate the shift.
 2. **Set font pair** — Read `references/font-catalog.md`. Select fonts based on the brand adjectives and the concept. Verify the choice doesn't violate the archetype's tone constraint. Do NOT default to the first font in the archetype's tone row — rotate across the full catalog.
-3. **Write the complete `src/styles/tokens.css`** — full file, not a diff. Use the archetype's radius personality, shadow style, and dark/light base preference.
+3. **Decide on accent pairing** — Read the archetype's "Accent pairing" note and the dual-color pairing system in `references/color-system.md`. If the concept, adjectives, or archetype support a second accent, choose the pairing method (split-complementary / triadic / intuitive clash), derive the accent HSL, and add `--color-accent`, `--color-accent-hover`, and `--color-accent-subtle` tokens. If the archetype calls for restraint, omit the accent and note why.
+4. **Write the complete `src/styles/tokens.css`** — full file, not a diff. Use the archetype's radius personality, shadow style, and dark/light base preference.
 
 ### Step 7 — Write design brief
 
@@ -152,7 +153,7 @@ Write `.claude/design-brief.md` with this structure:
 ## Palette
 - Brand: `hsl(H S% L%)` — [one-word character, e.g. "amber", "slate", "coral"]
 - Surface: [light/dark + value]
-- Accent: [optional second accent]
+- Accent: `hsl(AH AS% AL%)` — [pairing method: split-complementary / triadic / intuitive clash] — [role: where it appears] | *omit if not used — note reason*
 
 ## Typography
 - Display font: [Fontsource package + CSS var]

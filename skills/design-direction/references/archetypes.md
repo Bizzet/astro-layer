@@ -19,6 +19,7 @@
 - Neutral saturation: 8–15%
 - Surface: warm off-white — `hsl(30–40° 15–20% 96–98%)`, never pure white
 - Brand-subtle: very light tint, `hsl(brandH brandS% 95–97%)`
+- **Accent pairing (optional):** Editorial can use a second accent when the concept demands unexpected tension — e.g., a bold editorial brand that pairs burnt sienna (12°) with teal (172°) for a "magazine cover" energy. Use the intuitive clash method. The accent appears only on secondary interactive elements and pull-quote borders — never on the primary CTA. If the concept is restrained or serious, omit the accent entirely.
 
 **Radius:** Sharp — `--radius-sm: 2px; --radius-md: 3px; --radius-lg: 4px;` — almost none.
 
@@ -58,6 +59,7 @@
 - Brand saturation: 90–100% — no compromises, must be electric
 - Brand lightness: 45–55%
 - Neutral hue: pure gray — saturation 0%. The brand color is the only color.
+- **Accent pairing:** Brutalist supports — and often benefits from — a second electric accent derived via triadic or split-complementary method (see `color-system.md`). The accent must be equally saturated (90–100%) and appear at roughly half the frequency of the brand. The two colors become the entire visual language against the pure gray/white field.
 - Surface: `hsl(0 0% 100%)` or `hsl(0 0% 4%)` — no tinting, no warmth
 - Border: 2px solid (heavier than default)
 
@@ -188,6 +190,7 @@
 - Neutral saturation: 12–22% — more saturated than most; the dark void should have a color cast
 - Surface: `hsl(neutralH neutralS% 9–12%)`
 - Brand-subtle: `hsl(brandH brandS% 6–10%)` — almost invisible, just a hint
+- **Accent pairing:** Retro-Futuristic commonly uses two neon colors — a primary glow and a secondary highlight. Use split-complementary (brand hue ± 150°) for maximum drama. The accent appears on borders, scanline elements, and secondary interactive states. Both colors glow; primary glows more intensely. Example: cyan (175°) as brand + magenta (295°) as accent — the canonical cyberpunk pairing.
 - Remember: neutral scale is inverted
 
 **Radius:** Zero or very sharp. `--radius-sm: 0; --radius-md: 2px; --radius-lg: 4px;`
@@ -360,6 +363,7 @@
 - Neutral hue: warm, 35–48° — bright and sunny, not dusty
 - Neutral saturation: 15–28% — warmer and more saturated than most; the whole palette should feel energetic
 - Surface: `hsl(0 0% 100%)` or very lightly tinted warm white
+- **Accent pairing:** Playful almost always benefits from a second accent derived via triadic method. Classic pairings: tangerine (22°) + lime (88°), hot pink (328°) + electric yellow (55°), coral (348°) + cyan (182°). The accent appears on tags, highlighted prices, hover states, and stacked shadow layers — never competing with the brand on CTAs.
 
 **Radius:** Maximum. `--radius-sm: 0.75rem; --radius-md: 1.25rem; --radius-lg: 2rem; --radius-xl: 3rem; --radius-full: 9999px;`
 
