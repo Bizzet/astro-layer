@@ -10,6 +10,18 @@ paths:
 
 Adds one of the 8 standard business sections to an Astro page. Each section is a self-contained component with semantic HTML, design-token-only CSS, and ARIA.
 
+## Before generating anything
+
+1. Read `.claude/design-brief.md` if it exists. It defines the archetype, layout tendency, section variant preferences, and atmosphere. Every section must match the brief.
+2. If no brief exists, default to whatever tokens.css contains — but note that sections should still vary layout and atmosphere rather than copying templates verbatim.
+
+## Choosing a layout variant
+
+Every section has multiple layout variants in `references/sections.md`. **Do not default to Variant A every time.** Choose based on:
+- The archetype's layout tendency from the design brief
+- What sections are already on the page (vary rhythm — don't repeat the same layout twice in a row)
+- The content being placed (many items → grid; few items → editorial/spotlight)
+
 ## The 8-Section Library
 
 | Section | Key Elements |
@@ -32,6 +44,14 @@ Adds one of the 8 standard business sections to an Astro page. Each section is a
 - Add `transition:animate` directive for View Transitions
 - Include appropriate ARIA labels for interactive elements
 
+## Anti-generic rules — enforce always
+
+- **Never default to `auto-fit minmax(18rem, 1fr)`** for Services without considering the Editorial Feature List or Alternating Spotlight variants.
+- **Never use `text-align: center` on every section** — centered layouts feel generic. Vary alignment between sections.
+- **Never give every section the same background** — use the atmosphere patterns from `references/sections.md` to create variation: surface-tinted sections, brand-accent bands, full-bleed imagery, texture overlays.
+- **Never stack sections with identical visual weight** — vary section density, background, and layout rhythm deliberately.
+- **Never produce a CTA button with `color: #fff` hard-coded** — use `var(--color-surface)` or a semantic token.
+
 ## Reference
 
-See `references/sections.md` for complete HTML/CSS/Props patterns for all 8 sections.
+See `references/sections.md` for complete HTML/CSS/Props patterns, layout variants, and atmosphere patterns for all 8 sections.

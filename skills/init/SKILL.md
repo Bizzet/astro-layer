@@ -23,7 +23,15 @@ Sets up the astro-layer AI layer in an existing Astro project. Generates CLAUDE.
    - Content collections — check `src/content.config.ts`
    - Styles — check for `src/styles/tokens.css`
 
-3. **Set up tokens** — If `src/styles/tokens.css` is missing, copy from starter template. If present, leave it and catalogue existing tokens.
+3. **Design direction** — Before writing tokens:
+   - Check if `.claude/design-brief.md` already exists. If yes, read it and use that archetype for tokens.
+   - If no brief exists and `src/styles/tokens.css` is missing, ask the user three questions (inline — do not redirect to the design-direction skill):
+     1. What does this business do, and who is the customer?
+     2. Three words that should describe how the site feels.
+     3. (Optional) Any visual references or words to avoid?
+   - Based on the answers, pick an archetype from `skills/design-direction/references/archetypes.md` and write `.claude/design-brief.md`.
+   - Generate `src/styles/tokens.css` from that archetype's token recipe — **do not copy the generic starter tokens verbatim**. Vary the hue from the example. Select a distinctive Fontsource font pair (never Inter, Roboto, Arial, or system-ui as the display font).
+   - If `src/styles/tokens.css` already exists, leave it unchanged and skip this step.
 
 4. **Generate CLAUDE.md hierarchy** from templates in `references/`:
    - Root `CLAUDE.md` — adapted with detected business name, integrations
