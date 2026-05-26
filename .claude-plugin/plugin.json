@@ -1,7 +1,7 @@
 {
   "name": "astro-layer",
-  "version": "2.2.0",
-  "description": "AI layer for building beautiful, unique small-business Astro 6.3 websites — design-direction skill, 12 aesthetic archetypes, kinetic typography, creative interactions, section transitions, depth & blend patterns, bold layout variants, scroll storytelling, SEO, Vercel.",
+  "version": "2.3.0",
+  "description": "AI layer for building beautiful, unique small-business Astro 6.3 websites — design-direction skill, 12 aesthetic archetypes, kinetic typography, creative interactions, decorative SVG system, section transitions, depth & blend patterns, bold layout variants, scroll storytelling, SEO, Vercel.",
   "author": { "name": "Bizzet" },
   "license": "MIT",
   "mcpServers": {

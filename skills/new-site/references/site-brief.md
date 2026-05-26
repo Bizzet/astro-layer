@@ -23,20 +23,26 @@ If the client mentions an existing site URL or reference site, scrape it with Fi
 
 **How to use:** Populate brief fields from scraped content, noting what was scraped vs what was provided. Only ask questions for fields that couldn't be filled from the scrape.
 
-## Industry → Color Mapping
+## Adjective Derivation for design-direction
 
-| Industry | Brand Hue | Tone | Notes |
-|---|---|---|---|
-| Plumbing / HVAC | Earthy greens (hsl 140–160) | Trustworthy, earthy | Deep green or teal |
-| Dental / Medical | Clean blues (hsl 200–220) | Clinical, calm | Soft blue-white |
-| Legal / Finance | Confident navy (hsl 220–240) | Professional, authoritative | Deep navy |
-| Restaurant / Food | Warm ambers (hsl 30–50) | Inviting, appetizing | Warm orange-gold |
-| Fitness / Wellness | Energetic orange-red (hsl 10–30) | Energetic, motivating | Vibrant accent |
-| Consulting | Slate blue (hsl 215–230) | Strategic, trustworthy | Muted professional |
-| Real Estate | Earthy neutrals (hsl 35–45) | Warm, approachable | Tan with dark text |
-| Landscaping | Deep greens (hsl 130–150) | Natural, growth-oriented | Forest green |
-| Beauty / Salon | Rose pinks (hsl 340–360) | Elegant, modern | Blush pink |
-| Tech / SaaS | Indigo / violet (hsl 250–270) | Innovative, modern | Deep purple-blue |
+Brand adjectives come from the brief, not from the industry. When the user's prompt includes explicit feel words ("earthy greens", "clean and professional", "bold and energetic"), extract them directly. When they don't, derive from the differentiator and best-customer answers:
+
+| If the differentiator says… | → Adjectives lean toward… |
+|---|---|
+| Fast, reliable, emergency available | dependable, no-nonsense, confident |
+| Gentle, family-friendly, accepting new patients | warm, approachable, reassuring |
+| Local, personal, community-focused | authentic, grounded, unpretentious |
+| Expert, specialist, years of experience | authoritative, precise, trustworthy |
+| Premium, bespoke, white-glove | refined, quiet, considered |
+| Affordable, transparent, fair | honest, straightforward, accessible |
+| Creative, unique, one-of-a-kind | distinctive, expressive, individual |
+
+For anti-adjectives, use the "avoid" field from the look/feel answer. Common mappings:
+- "Don't look corporate" → anti: corporate, sterile, generic
+- "Not clinical" → anti: cold, technical, institutional
+- "Not cheap-looking" → anti: garish, cluttered, discount
+
+**The goal is 3 adjectives that are specific enough for design-direction to make a non-obvious archetype choice.** "Professional and modern" is too generic. "Precise, unhurried, considered" gives design-direction something to work with.
 
 ## Page → Section Mapping
 
@@ -96,34 +102,32 @@ If the client mentions an existing site URL or reference site, scrape it with Fi
 
 ## Example Single-Prompt Patterns
 
-These prompts extract all required info from one message — no Q&A phase:
+These prompts extract all required info from one message — no Q&A phase. Include feel words so design-direction has adjectives to work with:
 
 ```
 /astro-layer:new-site — Martinez Plumbing, Austin TX, plumbing & HVAC,
-  pages: Home/About/Services/Contact, earthy greens
+  pages: Home/About/Services/Contact,
+  feel: dependable, no-nonsense, local
 
 /astro-layer:new-site — Lakeview Dental, friendly family dentist,
-  pages: Home/Services/About/Contact/Blog, clean blue and white
+  pages: Home/Services/About/Contact/Blog,
+  feel: warm, gentle, reassuring, not clinical
 
 /astro-layer:new-site — Summit Strategy Consulting, executive coaching,
-  pages: Home/About/Services/Pricing/Contact, confident navy
+  pages: Home/About/Services/Pricing/Contact,
+  feel: precise, authoritative, considered, not generic corporate
 
 /astro-layer:new-site — Green Thumb Landscaping, residential & commercial,
-  pages: Home/Services/Portfolio/About/Contact, deep forest green
+  pages: Home/Services/Portfolio/About/Contact,
+  feel: grounded, craft-focused, unhurried
 
 /astro-layer:new-site — Bella Beauty Studio, full-service hair salon,
-  pages: Home/Services/About/Booking/Contact, elegant rose pink
+  pages: Home/Services/About/Booking/Contact,
+  feel: refined, individual, confident, not chain-salon
 ```
 
-## Token Adjustment by Industry
+When feel words are absent from the prompt, derive adjectives from the differentiator and best-customer answers using the Adjective Derivation table above before invoking design-direction.
 
-When adjusting `--color-brand` for industry, also update:
-- `--color-brand-hover` (5–8 points darker lightness)
-- `--color-brand-subtle` (95–97% lightness, same hue)
+## Token Generation
 
-Example — earthy green (plumbing):
-```css
---color-brand:        hsl(148 55% 38%);
---color-brand-hover:  hsl(148 55% 30%);
---color-brand-subtle: hsl(148 55% 96%);
-```
+Token generation is handled entirely by `design-direction`. Do not adjust token values manually in `new-site`. design-direction writes the complete `src/styles/tokens.css` and `.claude/design-brief.md` — all downstream skills (new-section, new-component) read the brief to stay coherent with the visual identity.

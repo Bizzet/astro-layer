@@ -34,7 +34,7 @@ npm install -g @astrojs/language-server
 # ── Auto-invoked as Claude works ─────────────────────────
 # new-component, new-page, new-section, design-tokens,
 # seo-optimize, content-collection, add-blog,
-# animate, dark-mode, add-font
+# animate, dark-mode, add-font, svg-decorative
 
 # ── Deliberate actions (type explicitly) ─────────────────
 /astro-layer:deploy-vercel
@@ -55,7 +55,7 @@ npx @astrojs/upgrade           # upgrades Astro + all official integrations
 
 **User-invoked entry points** (`new-site`, `init`) require you to type the command explicitly and have `disable-model-invocation: true`.
 
-**Model-auto-invoked** skills (`new-component`, `new-page`, `new-section`, `design-tokens`, `seo-optimize`, `content-collection`, `add-blog`, `animate`, `dark-mode`, `add-font`) are selected by Claude automatically when they match the task.
+**Model-auto-invoked** skills (`new-component`, `new-page`, `new-section`, `design-tokens`, `seo-optimize`, `content-collection`, `add-blog`, `animate`, `dark-mode`, `add-font`, `svg-decorative`) are selected by Claude automatically when they match the task.
 
 **User-invoked deliberate actions** (`deploy-vercel`, `performance-check`, `quality-check`, `client-handoff`) require explicit invocation and have `disable-model-invocation: true`.
 
@@ -140,6 +140,17 @@ The Stop hook proposes incremental updates after each session — review `.claud
 ```bash
 node tooling/validate-all.js   # expects 15/15
 ```
+
+---
+
+## Changelog: v2.3.0
+
+| Area | Change |
+|---|---|
+| `svg-decorative` skill | New skill: decorative and structural SVG elements — background blobs, noise grain overlays, dot/line grids, ring/arc motifs, corner ornaments. Archetype lookup table maps each of the 12 archetypes to a specific SVG category and shape vocabulary. Includes `references/svg-patterns.md` with complete ready-to-drop `.astro` components for every category. |
+| `new-section` skill | Added pointer to `svg-decorative` in Reference section |
+| `new-component` skill | Added pointer to `svg-decorative` in Reference section |
+| Validator | Check 2 updated: 16 → 17 SKILL.md files |
 
 ---
 

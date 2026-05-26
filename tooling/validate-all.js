@@ -63,13 +63,13 @@ check(1, 'plugin.json valid JSON with name, version, mcpServers', () => {
   return typeof p.name === 'string' && typeof p.version === 'string' && typeof p.mcpServers === 'object';
 });
 
-// ── Check 2: All 16 SKILL.md files have name + description frontmatter ───────
-check(2, 'All 16 SKILL.md files have name + description frontmatter', () => {
+// ── Check 2: All 17 SKILL.md files have name + description frontmatter ───────
+check(2, 'All 17 SKILL.md files have name + description frontmatter', () => {
   const skills = [
     'new-site', 'init', 'new-component', 'new-page', 'new-section',
     'design-tokens', 'seo-optimize', 'content-collection', 'add-blog',
     'animate', 'dark-mode', 'add-font', 'deploy-vercel',
-    'performance-check', 'quality-check', 'client-handoff',
+    'performance-check', 'quality-check', 'client-handoff', 'svg-decorative',
   ];
   for (const skill of skills) {
     const path = `skills/${skill}/SKILL.md`;

@@ -36,7 +36,7 @@ See `references/site-brief.md` for the full question list, industry → color ma
 2. **The one action** — what should a visitor do when they land on the site?
 3. **The differentiator** — what keeps customers coming back that competitors can't honestly say about themselves?
 4. **The customer** — describe the best customer as a person: who are they, and why did they choose this business over others?
-5. **Look, feel & assets** — a reference site with the right feeling, what to avoid, and what content already exists (photos, logo, reviews)
+5. **Look, feel & assets** — a reference site with the right feeling, what to avoid, and what content already exists (photos, logo, reviews). Include 2–3 words describing how the site should *feel* (e.g. "warm, trustworthy, no-nonsense" or "precise, premium, quiet").
 
 ### Scraping Existing or Reference Sites
 
@@ -71,8 +71,9 @@ After brief collection, write `BRIEF.md` at the project root before touching any
 [reference site], avoid: [things to avoid]
 [any existing assets: photos, logo, reviews]
 
-## Brand Color
-[rationale for chosen hue]
+## Brand Adjectives
+[3 words — how the site should feel]
+Anti-adjectives: [words it must NOT feel like, from the "avoid" field above]
 
 ## SEO Details
 Address: [if known]
@@ -125,7 +126,7 @@ BRIEF.md and PLAN.md are already written. Now:
 
 1. Copy `starter/` to target directory
 2. Update `astro.config.mjs` site URL
-3. Adjust `--color-brand` tokens for industry (see site-brief.md)
+3. **Run `design-direction`** using the brief's industry/audience, brand adjectives, and anti-adjectives. This overwrites `src/styles/tokens.css` with a fully-derived visual identity and writes `.claude/design-brief.md`. Do not adjust token colors manually — design-direction owns this step entirely. See `references/site-brief.md` for adjective derivation guidance when the user's prompt lacks explicit adjectives.
 4. Generate `CLAUDE.md` hierarchy and `SITE_MAP.md` following the `init` skill (see `skills/init/SKILL.md` steps 3–5). All four files are required:
    - `CLAUDE.md` — root context (from `skills/init/references/CLAUDE.root.md`)
    - `src/components/CLAUDE.md` — component conventions

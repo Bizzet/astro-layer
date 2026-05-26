@@ -37,6 +37,11 @@
 
 **Atmosphere:** Newsprint warmth. Strong horizontal rules. Headlines that feel like ink on paper. No rounded cards — use ruled borders instead of box shadows.
 
+**Signature Moves — at least 2 must appear in every Editorial site:**
+1. Hero `h1` at `clamp(3.5rem, 12vw, 9rem)` or larger — not content typography, architecture. Tight tracking, heavy weight.
+2. Section identifier displayed as a small-caps label rotated 90° in a narrow column left of the content, or as a 2-digit number in a contrasting weight — separates sections without using visual decoration.
+3. One italic pull-quote at `clamp(1.6rem, 3vw, 2.4rem)` that spans asymmetrically — left-offset, wider than the body column, with a thin left-border rule in the brand color.
+
 **Anti-patterns:** Rounded pill buttons, purple gradient CTAs, icon-in-circle service cards, anything that looks "SaaS."
 
 ---
@@ -75,6 +80,11 @@
 
 **Atmosphere:** No decoration — structure IS the decoration. Thick borders. Stark contrast. Text at unexpected scales.
 
+**Signature Moves — at least 2 must appear in every Brutalist site:**
+1. At least one heading so large it presses against or bleeds past the container: `white-space: nowrap; overflow: visible; font-size: clamp(4rem, 14vw, 11rem)` — the overflow IS the statement.
+2. Hard-offset box shadows on featured cards and interactive elements: `5px 5px 0 hsl(0 0% 0%)` — never blurred, never colored, always black offset.
+3. At least one section where the layout grid is exposed as a design element: visible 1–2px borders on grid cells, or a structural line framework beneath content, or column markers in the background.
+
 **Anti-patterns:** Rounded corners (any), soft shadows, gradient backgrounds, stock photos with soft bokeh.
 
 ---
@@ -110,6 +120,11 @@
 **Hero variant:** Split (with real photo) or Fullscreen Cinematic with texture overlay.
 
 **Atmosphere:** Warmth and texture. Use SVG noise filter as a subtle background texture. Soft gradients from warm white to cream. No sharp geometric decoration.
+
+**Signature Moves — at least 2 must appear in every Organic/Natural site:**
+1. SVG noise/grain filter applied as a background texture on at least one panel — the grain must be perceptible at normal viewing distance, not invisible: `<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" />` at 3–6% opacity overlay.
+2. One hero or section statement in italic display weight at large scale — `clamp(2.8rem, 7vw, 5.5rem)`, `font-style: italic` — feels hand-set, organic, not mechanical.
+3. At least one container that breaks the rectangle: high `border-radius` asymmetry on a hero image frame, or an SVG organic blob shape as a background element behind a content panel.
 
 **Anti-patterns:** Hard box shadows, geometric icons, monospace fonts, dark tech aesthetics, anything that feels synthetic.
 
@@ -149,6 +164,11 @@
 
 **Atmosphere:** Deep background, gold accents used sparingly (never everywhere). Thin horizontal rules. Everything feels considered.
 
+**Signature Moves — at least 2 must appear in every Luxury/Refined site:**
+1. A 1px horizontal rule in the brand color (`border-top: 1px solid var(--color-brand)`) placed between every major section — not a divider as afterthought, but a design element that gives the layout its cadence.
+2. One full-bleed near-black section containing only a single centered line of text in the brand color — nothing else. No subhead, no button, no image. The restraint IS the statement.
+3. Display font at `font-weight: 100–200`, `font-size: clamp(4rem, 8vw, 7rem)` — the extreme thinness at large scale creates the tension that defines the archetype.
+
 **Anti-patterns:** Bright colors, rounded buttons, busy icon grids, testimonial carousels, anything energetic or playful.
 
 ---
@@ -187,6 +207,11 @@
 
 **Atmosphere:** CRT glow. Background gradients that suggest depth and space. Fine grid lines via `repeating-linear-gradient`. Neon borders instead of shadows.
 
+**Signature Moves — at least 2 must appear in every Retro-Futuristic site:**
+1. Scanline texture on at least one section background: `background-image: repeating-linear-gradient(transparent 0px, transparent 2px, hsl(0 0% 0% / 0.05) 2px, hsl(0 0% 0% / 0.05) 4px)` — subtle presence, not overwhelming.
+2. Hero heading with neon atmospheric glow: `text-shadow: 0 0 20px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.8), 0 0 60px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.35)` — the text appears to emit light.
+3. At least one neon-border card or container: `box-shadow: inset 0 0 0 1px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.6), 0 0 16px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.15)` — glowing edge, not filled.
+
 **Anti-patterns:** Warm colors, organic shapes, serif fonts, anything pastoral or earthy.
 
 ---
@@ -223,6 +248,11 @@
 **Hero variant:** Centered Editorial or Split.
 
 **Atmosphere:** Diffuse pastel gradients. Soft overlapping shapes. Nothing sharp or angular. The entire site feels like a hug.
+
+**Signature Moves — at least 2 must appear in every Soft/Pastel site:**
+1. Two overlapping soft shapes (CSS `border-radius: 50%` divs or pill blobs) in brand and accent colors at 12–20% opacity, used as decorative layout elements behind content panels — not decoration for its own sake but a spatial layer that adds depth.
+2. Display heading at generous scale — `clamp(3rem, 10vw, 7rem)`, `font-weight: 600–700` — pastels need scale to avoid looking timid; the size is what gives the softness confidence.
+3. At least one section with a soft multi-stop gradient background that transitions from pure white to `var(--color-brand-subtle)` over the full section height — the gradient is the atmosphere, not a border or divider.
 
 **Anti-patterns:** Hard edges, monospace fonts, dark backgrounds, high-contrast brutalism, anything clinical or corporate.
 
@@ -264,6 +294,11 @@
 
 **Atmosphere:** Fine grid lines in background via CSS. Monochrome with one electric accent used purposefully. Every element looks like it has a function.
 
+**Signature Moves — at least 2 must appear in every Tech-Industrial site:**
+1. Fine grid texture as section background: `background-image: repeating-linear-gradient(hsl(215 15% 60% / 0.05) 1px, transparent 1px), repeating-linear-gradient(90deg, hsl(215 15% 60% / 0.05) 1px, transparent 1px); background-size: 100% 28px, 28px 100%` — the grid signals precision without being decorative.
+2. At least one monospace status tag, version badge, or metric label using `font-family: var(--font-mono)` — reinforces the developer/infrastructure register.
+3. Terminal cursor animation on a key heading or CTA: a blinking `|` character appended via `::after` pseudo-element with `@keyframes blink { 50% { opacity: 0 } }` — signals live system, not static brochure.
+
 **Anti-patterns:** Decorative illustrations, warm palettes, rounded pill buttons, handwritten fonts, pastoral photography.
 
 ---
@@ -302,6 +337,11 @@
 
 **Atmosphere:** Deep, velvety background. Gold rules and dividers. Geometric pattern via CSS `repeating-linear-gradient`. Every section feels like entering a grand room.
 
+**Signature Moves — at least 2 must appear in every Art Deco site:**
+1. Decorative corner brackets on at least one featured card or section container: CSS `::before`/`::after` pseudo-elements forming an L-bracket in each corner — `border-top: 1px solid var(--color-brand); border-left: 1px solid var(--color-brand); width: 1rem; height: 1rem` — the geometric detail is the signature.
+2. A geometric section divider — chevron, diamond, or repeating fan pattern via CSS `clip-path` or inline SVG between key sections, replacing the standard `<hr>`.
+3. Key heading at `letter-spacing: 0.15–0.2em`, `font-weight: 300`, `text-transform: uppercase`, in brand color on the dark surface — the tracked thin caps is the purest expression of the archetype.
+
 **Anti-patterns:** Organic shapes, rounded anything, bright saturated colors, casual typography, anything that feels modern-tech.
 
 ---
@@ -337,6 +377,11 @@
 **Hero variant:** Centered Editorial or Split.
 
 **Atmosphere:** Bright background colors (not white). Bold shapes. Micro-animations on hover — things wiggle and bounce. The page feels alive.
+
+**Signature Moves — at least 2 must appear in every Playful site:**
+1. At least one element with a stacked multi-layer colored shadow: `box-shadow: 4px 4px 0 hsl(brandH 90% 35%), 8px 8px 0 hsl(brandH 90% 25%)` — the layered offset creates a cartoon-like depth that is the defining visual of the archetype.
+2. At least one element with a subtle rotation: `transform: rotate(-1.5deg)` on a card, `rotate(1deg)` on an image — enough to feel casual and imperfect, not enough to look broken. Combined with `transition: transform 0.2s ease` so hover straightens it.
+3. One oversized decorative element — a large emoji, a simple illustration, or a bold icon at `font-size: 4–6rem` — used as the primary visual of a section, larger than it "should" be. Scale is the personality.
 
 **Anti-patterns:** Dark backgrounds, thin fonts, minimal aesthetic, anything corporate or serious.
 
@@ -374,6 +419,11 @@
 
 **Atmosphere:** Barely there. The accent color appears once and it's enough. Typography does everything.
 
+**Signature Moves — at least 2 must appear in every Minimal/Clean site:**
+1. One section where a single word or number appears at `clamp(8rem, 20vw, 16rem)` as the sole visual element — no image, no subhead, no button. The scale of the word is the entire design of that section.
+2. Maximum 2 visual elements per section: one text cluster + one other (image, number, or ruled line). Any third element is a violation of the archetype's fundamental constraint.
+3. One section with more whitespace than content — the empty space is not a failure to fill the page, it is a deliberate design choice. The ratio should be approximately 70% space to 30% content.
+
 **Anti-patterns:** Multiple colors, gradients, icons everywhere, busyness of any kind, drop shadows.
 
 ---
@@ -409,6 +459,11 @@
 **Hero variant:** Fullscreen Cinematic (with ocean/landscape photo) or Split.
 
 **Atmosphere:** Open sky. Barely-there background tints. Photos as atmosphere. Sandy texture possible via noise overlay.
+
+**Signature Moves — at least 2 must appear in every Coastal/Airy site:**
+1. At least one full-bleed photography section at `min-height: 90vh` with minimal text overlay at the bottom — the image carries the section; text is subordinate to atmosphere.
+2. One panel with a sandy grain texture applied via SVG noise filter overlay at 2–4% opacity — the texture breaks the clinical flatness that afflicts all-CSS sites and grounds the design in material warmth.
+3. Section headline at `font-weight: 300`, `font-size: clamp(2.5rem, 6vw, 5rem)`, `line-height: 1.15` with generous padding above and below — the spaciousness of the typography is the primary atmosphere signal.
 
 **Anti-patterns:** Dark backgrounds, heavy fonts, brutalist edges, neon colors, dense layouts.
 
@@ -446,5 +501,10 @@
 **Hero variant:** Fullscreen Cinematic.
 
 **Atmosphere:** Background that feels like late-night lighting. Gradients that suggest candlelight or neon glow. Images with dark atmospheric quality. Every section transition should feel like a scene change.
+
+**Signature Moves — at least 2 must appear in every Dark/Moody site:**
+1. At least one section with a radial gradient suggesting a single atmospheric light source: `background: radial-gradient(ellipse 80% 60% at 30% 50%, hsl(var(--brand-h) var(--brand-s) 20% / 0.35) 0%, transparent 70%), var(--color-bg)` — candlelight, spotlight, ember glow.
+2. Hero or key display text with an atmospheric glow: `text-shadow: 0 0 40px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.25), 0 0 80px hsl(var(--brand-h) var(--brand-s) var(--brand-l) / 0.12)` — the text appears to emit a subtle warmth, not neon, ambient.
+3. At least one section where a full-height image bleeds edge to edge with content overlaid at the bottom third — content emerges from the image rather than sitting alongside it. This is the cinematic frame.
 
 **Anti-patterns:** Light backgrounds, bright colors, playful rounded shapes, stock corporate photography.

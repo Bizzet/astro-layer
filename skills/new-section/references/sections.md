@@ -120,7 +120,7 @@ const { headline, subheadline, ctaPrimary, ctaSecondary } = Astro.props;
   margin-bottom: var(--space-6);
 }
 .hero--editorial h1 {
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: clamp(4rem, 11vw, 8rem);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
 }
@@ -333,6 +333,157 @@ Use `|` in the headline prop to control line breaks: `headline="We build|what la
   .statement-line--2 { padding-left: var(--space-6); }
   .hero-statement-footer { flex-direction: column; align-items: flex-start; }
 }
+```
+
+---
+
+### Hero — Variant E: Kinetic Word-Cycle
+
+Static headline prefix with a brand-colored word or phrase that cycles through an array on an infinite loop — zero JavaScript, pure CSS keyframe animation. The cycling text is the visual focal point.
+
+**Best for:** Editorial, Luxury/Refined, Tech-Industrial, Minimal/Clean — any site where the brand idea can be expressed as a series of charged words.
+
+**Works best with 4–6 words.** Longer cycles slow the rhythm; shorter cycles feel rushed.
+
+```astro
+---
+interface Props {
+  prefix: string;
+  cycleWords: string[];
+  subheadline: string;
+  ctaPrimary: { label: string; href: string };
+  eyebrow?: string;
+}
+const { prefix, cycleWords, subheadline, ctaPrimary, eyebrow } = Astro.props;
+---
+<section class="hero hero--kinetic" transition:animate="fade">
+  <div class="container hero-kinetic-inner">
+    {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+    <h1
+      class="hero-kinetic-headline"
+      aria-label={`${prefix} ${cycleWords[0]}`}
+    >
+      <span class="hero-kinetic-prefix" aria-hidden="true">{prefix}</span>
+      <span class="hero-kinetic-wrap" aria-hidden="true">
+        {cycleWords.map((word, i) => (
+          <span
+            class="hero-kinetic-word"
+            style={`--i:${i};--n:${cycleWords.length}`}
+          >{word}</span>
+        ))}
+      </span>
+    </h1>
+    <div class="hero-kinetic-footer">
+      <p class="hero-sub">{subheadline}</p>
+      <a href={ctaPrimary.href} class="btn btn--primary">{ctaPrimary.label}</a>
+    </div>
+  </div>
+</section>
+```
+
+```css
+.hero--kinetic {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-8) 0 var(--space-12);
+  border-bottom: var(--border);
+  overflow: hidden;
+}
+
+.hero-kinetic-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.hero-kinetic-headline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-block: var(--space-8);
+}
+
+.hero-kinetic-prefix {
+  display: block;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-bold);
+  color: var(--color-text-muted);
+}
+
+.hero-kinetic-wrap {
+  display: block;
+  position: relative;
+  height: 1.02em;
+  margin-top: 0.06em;
+  overflow: hidden;
+}
+
+.hero-kinetic-word {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-bold);
+  color: var(--color-brand);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.2em);
+  animation: word-cycle calc(var(--n) * 4s) ease-in-out infinite;
+  animation-delay: calc(var(--i) * 4s);
+}
+
+@keyframes word-cycle {
+  0%   { opacity: 0; transform: translateY(0.2em); }
+  5%   { opacity: 1; transform: translateY(0); }
+  20%  { opacity: 1; transform: translateY(0); }
+  25%  { opacity: 0; transform: translateY(-0.2em); }
+  100% { opacity: 0; transform: translateY(0.2em); }
+}
+
+.hero-kinetic-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: var(--border);
+  flex-wrap: wrap;
+}
+
+.hero-kinetic-footer .hero-sub {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  max-width: 36rem;
+}
+
+@media (max-width: 48rem) {
+  .hero-kinetic-prefix,
+  .hero-kinetic-word { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .hero-kinetic-footer { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-kinetic-word { animation: none; opacity: 0; transform: none; }
+  .hero-kinetic-word:first-child { opacity: 1; }
+}
+```
+
+**Usage example:**
+```astro
+<HeroSection
+  prefix="Great investments start with"
+  cycleWords={['bold ideas.', 'determination.', 'radical vision.', 'ambition.', 'conviction.']}
+  subheadline="A family-owned investment company building for generations."
+  ctaPrimary={{ label: 'Explore our universe', href: '/group-overview' }}
+/>
 ```
 
 ---
@@ -1215,6 +1366,149 @@ Overflowing row of cards. Creates motion and depth. Good for many testimonials.
 
 ---
 
+### Testimonials — Variant D: Numbered Portrait
+
+Oversized bold index numbers (01, 02, 03…) anchor each card alongside a portrait photo. The number is the visual — not decoration, but primary identity for each voice. Used for leadership quotes, investor perspectives, founding team credibility.
+
+**Best for:** Editorial, Luxury/Refined, Tech-Industrial — any investment, consulting, or authority-brand site where who said it matters as much as what they said.
+
+```astro
+---
+import { Image } from 'astro:assets';
+interface Props {
+  headline?: string;
+  testimonials: Array<{
+    quote: string;
+    author: string;
+    role?: string;
+    image?: ImageMetadata;
+    imageAlt?: string;
+  }>;
+}
+const { headline, testimonials } = Astro.props;
+---
+<section class="testimonials testimonials--portrait" transition:animate="slide">
+  <div class="container">
+    {headline && (
+      <header class="testimonials-portrait-header">
+        <h2>{headline}</h2>
+      </header>
+    )}
+    <div class="testimonials-portrait-grid">
+      {testimonials.map((t, i) => (
+        <article class="testimonial-portrait-card">
+          <div class="testimonial-portrait-top">
+            <span class="testimonial-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            {t.image && (
+              <Image
+                src={t.image}
+                alt={t.imageAlt ?? t.author}
+                width={120}
+                height={120}
+                class="testimonial-portrait-img"
+              />
+            )}
+          </div>
+          <blockquote class="testimonial-portrait-body">
+            <p class="testimonial-portrait-quote">{t.quote}</p>
+            <footer class="testimonial-portrait-attribution">
+              <cite class="testimonial-portrait-name">{t.author}</cite>
+              {t.role && <span class="testimonial-portrait-role">{t.role}</span>}
+            </footer>
+          </blockquote>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+```css
+.testimonials--portrait { padding-block: var(--space-20); }
+
+.testimonials-portrait-header {
+  border-top: 2px solid var(--color-text);
+  padding-top: var(--space-6);
+  margin-bottom: var(--space-16);
+}
+
+.testimonials-portrait-header h2 {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.testimonials-portrait-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: var(--space-12) var(--space-8);
+}
+
+.testimonial-portrait-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-bottom: var(--space-8);
+  border-bottom: var(--border);
+}
+
+.testimonial-portrait-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.testimonial-num {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-brand);
+  font-variant-numeric: tabular-nums;
+}
+
+.testimonial-portrait-img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.testimonial-portrait-quote {
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+
+.testimonial-portrait-quote::before { content: '\201C'; }
+.testimonial-portrait-quote::after  { content: '\201D'; }
+
+.testimonial-portrait-attribution {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+}
+
+.testimonial-portrait-name {
+  font-style: normal;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.testimonial-portrait-role {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+```
+
+---
+
 ## Pricing
 
 **Purpose:** Display service tiers clearly.
@@ -1577,6 +1871,263 @@ const { businessName, tagline, navLinks, socialLinks } = Astro.props;
 ```
 
 **Accessibility:** Social links need `aria-label="[Platform name]"`. Logo link needs `aria-label="Home"`.
+
+---
+
+## Logos
+
+**Purpose:** Display partner, client, investor, or portfolio company logos. The infinite-scroll marquee conveys volume and social proof without a static grid. Pause-on-hover lets users inspect logos.
+
+**Props:**
+```ts
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  logos: Array<{ name: string; src: string; width?: number; height?: number }>;
+  speed?: number; // seconds for one full pass, default 30
+}
+```
+
+**Template:**
+```astro
+---
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  logos: Array<{ name: string; src: string; width?: number; height?: number }>;
+  speed?: number;
+}
+const { eyebrow, headline, logos, speed = 30 } = Astro.props;
+---
+<section class="logos" transition:animate="fade" aria-label={headline ?? 'Partners and clients'}>
+  {(eyebrow || headline) && (
+    <div class="container logos-header">
+      {eyebrow && <p class="logos-eyebrow">{eyebrow}</p>}
+      {headline && <p class="logos-headline">{headline}</p>}
+    </div>
+  )}
+  <div class="logos-marquee" aria-hidden="true">
+    <div class="logos-track" style={`--speed: ${speed}s`}>
+      {[...logos, ...logos].map((logo, i) => (
+        <div class="logo-item">
+          <img
+            src={logo.src}
+            alt={i < logos.length ? logo.name : ''}
+            width={logo.width ?? 120}
+            height={logo.height ?? 40}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+```css
+.logos {
+  padding-block: var(--space-12) var(--space-16);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.logos-header { margin-bottom: var(--space-10); text-align: center; }
+
+.logos-eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.logos-headline {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-muted);
+}
+
+.logos-marquee { overflow: hidden; }
+
+.logos-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  width: max-content;
+  animation: logos-scroll var(--speed, 30s) linear infinite;
+}
+
+.logos-marquee:hover .logos-track { animation-play-state: paused; }
+
+.logo-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-item img {
+  height: 2rem;
+  width: auto;
+  max-width: 8rem;
+  opacity: 0.55;
+  filter: grayscale(100%);
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    filter var(--duration-base) var(--ease-standard);
+}
+
+.logo-item img:hover { opacity: 1; filter: grayscale(0%); }
+
+@keyframes logos-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logos-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    gap: var(--space-8);
+  }
+}
+```
+
+**Notes:**
+- The component duplicates `logos` internally for the seamless loop — pass each logo once. The second copy uses `alt=""` to avoid duplicate screen reader announcements.
+- `aria-hidden="true"` on `.logos-marquee` suppresses all logo alt text from AT; the section `aria-label` provides the accessible name.
+- **Static grid variant:** if there are 4–8 logos and no "volume to imply", skip the marquee — use `display: grid; grid-template-columns: repeat(auto-fit, 8rem); place-items: center;` instead.
+- **Dual-row variant:** add a second `.logos-track` with `animation-direction: reverse` for a richer layered marquee effect.
+
+---
+
+## Metrics
+
+**Purpose:** Display proof-of-scale numbers — years in business, projects completed, clients served, assets managed. Pattern D typography: tiny uppercase label, giant display value. Every number must earn its size — weak stats should stay in body copy.
+
+**Props:**
+```ts
+interface Props {
+  headline?: string;
+  eyebrow?: string;
+  metrics: Array<{ value: string; label: string; description?: string }>;
+  layout?: 'row' | 'grid';
+}
+```
+
+**Template:**
+```astro
+---
+interface Props {
+  headline?: string;
+  eyebrow?: string;
+  metrics: Array<{ value: string; label: string; description?: string }>;
+  layout?: 'row' | 'grid';
+}
+const { headline, eyebrow, metrics, layout = 'row' } = Astro.props;
+---
+<section class="metrics" transition:animate="slide">
+  <div class="container">
+    {eyebrow && <p class="metrics-eyebrow">{eyebrow}</p>}
+    {headline && <h2 class="metrics-headline">{headline}</h2>}
+    <ul role="list" class={`metrics-list metrics-list--${layout}`} aria-label="Key metrics">
+      {metrics.map((m) => (
+        <li class="metric-item">
+          <span class="metric-value">{m.value}</span>
+          <span class="metric-label">{m.label}</span>
+          {m.description && <p class="metric-desc">{m.description}</p>}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+```
+
+```css
+.metrics { padding-block: var(--space-20); }
+
+.metrics-eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.metrics-headline {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-16);
+  max-width: 36rem;
+}
+
+.metrics-list {
+  display: grid;
+  gap: var(--space-10) var(--space-8);
+  list-style: none;
+}
+
+.metrics-list--row  { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
+.metrics-list--grid { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-6);
+  border-top: 2px solid var(--color-brand);
+}
+
+.metric-value {
+  display: block;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: var(--font-bold);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-label {
+  display: block;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  max-width: 18ch;
+  line-height: var(--leading-snug);
+}
+
+.metric-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 24ch;
+}
+```
+
+**Usage example:**
+```astro
+<MetricsSection
+  eyebrow="By the numbers"
+  headline="Proof in numbers"
+  metrics={[
+    { value: '43', label: 'Billion NOK in Total Assets' },
+    { value: '250', label: 'Hotels across the Nordics' },
+    { value: '21', label: 'Billion NOK Gross Real Estate Value' },
+    { value: '30K+', label: 'Employees across the group' },
+  ]}
+  layout="row"
+/>
+```
+
+**Archetype overrides:**
+- **Editorial / Minimal/Clean:** change `.metric-item { border-top: 2px solid var(--color-text); }` and `.metric-value { color: var(--color-text); }`
+- **Luxury/Refined (dark):** set `.metric-value { color: var(--color-brand); }` for gold numbers on dark
+- **Brutalist:** push `.metric-value { font-size: clamp(4rem, 10vw, 8rem); }` — scale is the statement
 
 ---
 
