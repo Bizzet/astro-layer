@@ -1,0 +1,42 @@
+{
+  "$schema": "https://claude.ai/schemas/marketplace.json",
+  "name": "astro-layer",
+  "description": "AI layer for building beautiful small-business Astro 6.3 websites — design tokens, 8-section library, GSAP, Vercel, SEO, self-improving hooks.",
+  "owner": {
+    "name": "Bizzet"
+  },
+  "plugins": [
+    {
+      "name": "astro-layer",
+      "displayName": "Astro Layer",
+      "source": "./",
+      "description": "Gives Claude everything it needs to build complete, beautiful small-business Astro 6.3 websites autonomously. Vanilla CSS design tokens, 8-section business library, GSAP animations (opt-in), Vercel deployment, SEO with LocalBusiness JSON-LD, and a self-improving AI layer validated end-to-end.",
+      "version": "2.0.0",
+      "author": {
+        "name": "Bizzet"
+      },
+      "homepage": "https://github.com/Bizzet/astro-layer",
+      "repository": "https://github.com/Bizzet/astro-layer",
+      "license": "MIT",
+      "keywords": [
+        "astro",
+        "astro-6",
+        "static-site",
+        "small-business",
+        "design-tokens",
+        "seo",
+        "gsap",
+        "vercel",
+        "web-development"
+      ],
+      "category": "web-development",
+      "tags": [
+        "astro",
+        "css",
+        "seo",
+        "vercel",
+        "animations"
+      ]
+    }
+  ]
+}

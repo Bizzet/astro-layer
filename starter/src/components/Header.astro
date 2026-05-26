@@ -1,0 +1,113 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Home">
+      <span class="logo-text">Business Name</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <ul role="list" class="nav-list">
+        {navLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={['nav-link', { 'nav-link--active': currentPath === href }]}
+              aria-current={currentPath === href ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a href="/contact" class="btn btn--primary header-cta">Get in Touch</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-surface);
+    border-bottom: var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding-block: var(--space-4);
+  }
+
+  .logo {
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-brand);
+  }
+
+  .nav-list {
+    display: flex;
+    gap: var(--space-6);
+    margin-inline-start: auto;
+  }
+
+  .nav-link {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    padding-block: var(--space-1);
+    transition: color var(--duration-base) var(--ease-standard);
+  }
+
+  .nav-link:hover,
+  .nav-link--active {
+    color: var(--color-brand);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    text-decoration: none;
+    transition:
+      background-color var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard);
+  }
+
+  .btn--primary {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-brand-hover);
+    color: #fff;
+  }
+
+  @media (max-width: 48rem) {
+    .nav-list { display: none; }
+    .header-cta { display: none; }
+  }
+</style>

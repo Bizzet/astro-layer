@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Business Name",
+  "description": "Your business description here.",
+  "url": Astro.site?.href ?? "",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Main Street",
+    "addressLocality": "City",
+    "addressRegion": "State",
+    "postalCode": "00000",
+    "addressCountry": "US"
+  },
+  "telephone": "+1-555-000-0000",
+  "openingHours": ["Mo-Fr 09:00-17:00"]
+};
+---
+<Base
+  title="Business Name — Tagline"
+  description="Brief description of your business and what you offer. Keep this under 160 characters for SEO."
+  jsonLd={jsonLd}
+>
+  <section class="hero container">
+    <div class="hero-content">
+      <h1>Welcome to Business Name</h1>
+      <p class="hero-sub">Your compelling tagline goes here. Tell visitors what you do and why it matters.</p>
+      <div class="hero-cta">
+        <a href="/services" class="btn btn--primary">Our Services</a>
+        <a href="/contact" class="btn btn--outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: var(--space-24);
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin-block: var(--space-6);
+    max-width: 52ch;
+    margin-inline: auto;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--space-8);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-8);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    transition:
+      background-color var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .btn--primary {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-brand-hover);
+    color: #fff;
+  }
+
+  .btn--outline {
+    border: 2px solid var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  .btn--outline:hover {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+</style>

@@ -1,0 +1,13 @@
+{
+  "name": "astro-layer",
+  "version": "2.0.0",
+  "description": "AI layer for building beautiful small-business Astro 6.3 websites — design tokens, 8-section library, GSAP, Vercel, SEO, self-improving hooks.",
+  "author": { "name": "Bizzet" },
+  "license": "MIT",
+  "mcpServers": {
+    "astro-search": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/astro-search.js"]
+    }
+  }
+}

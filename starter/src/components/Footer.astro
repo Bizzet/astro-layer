@@ -1,0 +1,97 @@
+---
+const year = new Date().getFullYear();
+
+const footerLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="Home">Business Name</a>
+      <p class="footer-tagline">Your business tagline here.</p>
+    </div>
+
+    <nav aria-label="Footer navigation">
+      <ul role="list" class="footer-nav">
+        {footerLinks.map(({ href, label }) => (
+          <li><a href={href} class="footer-link">{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p class="footer-copy">
+        &copy; {year} Business Name. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-neutral-800);
+    color: var(--color-neutral-300);
+    margin-top: var(--space-24);
+  }
+
+  .footer-inner {
+    display: flex;
+    gap: var(--space-16);
+    padding-block: var(--space-12);
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    flex: 1;
+    min-width: 16rem;
+  }
+
+  .footer-logo {
+    display: inline-block;
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-tagline {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-400);
+    max-width: 30ch;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer-link {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-300);
+    text-decoration: none;
+    transition: color var(--duration-base) var(--ease-standard);
+  }
+
+  .footer-link:hover {
+    color: #fff;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--color-neutral-700);
+    padding-block: var(--space-4);
+  }
+
+  .footer-copy {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+    max-width: none;
+  }
+</style>

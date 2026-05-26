@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run preview:*)",
+      "Bash(npx astro check:*)",
+      "Bash(npx astro sync:*)",
+      "Bash(npx @astrojs/upgrade:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/*.pem)"
+    ]
+  },
+  "env": { "ASTRO_ENV": "development" }
+}

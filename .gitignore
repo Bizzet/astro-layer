@@ -1,0 +1,8 @@
+# Plugin dev / local state
+.claude/
+.firecrawl/
+
+# Starter template build artifacts
+starter/node_modules/
+starter/dist/
+starter/.astro/
