@@ -1,4 +1,5 @@
-import { defineConfig, fontProviders } from 'astro/config';
+// fontProviders is added to this import by the add-font skill
+import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({

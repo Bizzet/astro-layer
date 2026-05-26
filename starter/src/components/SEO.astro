@@ -33,5 +33,5 @@ const canonicalURL = Astro.url;
 <meta name="twitter:image" content={ogImage} />
 
 {jsonLd && (
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 )}
