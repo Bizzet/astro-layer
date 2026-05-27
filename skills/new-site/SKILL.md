@@ -85,7 +85,7 @@ Hours: [if known]
 
 **Run this phase for any site with 4+ pages or multiple audience types. Skip for 3 or fewer pages with a single audience.**
 
-Use Sequential Thinking MCP to determine before touching any files:
+**Call the `sequentialthinking` MCP tool** to determine before touching any files:
 - Audience hierarchy (primary → secondary)
 - Primary conversion path (the sequence of pages/sections that moves a visitor to the one action)
 - Section order per page (most important content first)
@@ -127,7 +127,8 @@ BRIEF.md and PLAN.md are already written. Now:
 1. Copy `starter/` to target directory
 2. Update `astro.config.mjs` site URL
 3. **Run `design-direction`** using the brief's industry/audience, brand adjectives, and anti-adjectives. This overwrites `src/styles/tokens.css` with a fully-derived visual identity and writes `.claude/design-brief.md`. Do not adjust token colors manually — design-direction owns this step entirely. See `references/site-brief.md` for adjective derivation guidance when the user's prompt lacks explicit adjectives.
-4. Generate `CLAUDE.md` hierarchy and `SITE_MAP.md` following the `init` skill (see `skills/init/SKILL.md` steps 3–5). All four files are required:
+4. **Rewrite `src/components/Header.astro`** based on the archetype from the design brief. Read `skills/init/references/nav-variants.md` and use the pattern that matches the archetype. The starter Header.astro is a baseline — it must not survive into any built site verbatim. Archetype-specific traits: background treatment (transparent/solid/ghost), link style (small-caps/mono/tracked/bold), hover state (underline draw / color flood / glow / hard block), CTA treatment (present/absent/text-link). If the archetype is Luxury or Dark/Moody, use the fixed+scroll-transition pattern and add `padding-top` to the hero section. Always include the mobile hamburger overlay.
+5. Generate `CLAUDE.md` hierarchy and `SITE_MAP.md` following the `init` skill (see `skills/init/SKILL.md` steps 3–5). All four files are required:
    - `CLAUDE.md` — root context (from `skills/init/references/CLAUDE.root.md`)
    - `src/components/CLAUDE.md` — component conventions
    - `src/pages/CLAUDE.md` — page conventions
@@ -157,15 +158,32 @@ BRIEF.md and PLAN.md are already written. Now:
 
 ## Phase 2 — Build Pages (One at a Time)
 
+**Before building any page, evaluate whether it qualifies for a scroll storytelling section** (from `skills/animate/references/animation-patterns.md`). Use a pinned scroll story section when:
+- A Services page has 4+ discrete steps or offerings that benefit from sequential reveal
+- A home page has a "how it works" or "our process" block with 3+ steps
+- An About page has a team or timeline that benefits from sequential unveiling
+
+If a page qualifies, replace the static section with a pinned scroll story. This is a defining pattern of premium landing pages and immediately distinguishes the site from templates.
+
 For each page where `status === "pending"`:
 
 1. Call `new-page` skill to create the page file
 2. Call `new-section` for each section in the page's `sections` array
 3. Run `npx astro check` — fix errors before proceeding
 4. Run `npm run build` — fix errors before proceeding
-5. Update page `status` to `"complete"` in `.claude/build-state.json`
-6. Update PLAN.md: check off `- [ ] Build [Page] page` → `- [x] Build [Page] page`
-7. `git commit -m "feat: build [page-id] page"`
+5. **Design quality gate** — before marking the page complete, verify all of the following. Fix any that are missing:
+   - [ ] **Entrance animations**: Every section has `animation-timeline: view()` reveals on headlines and content blocks
+   - [ ] **Section boundaries**: At least 2 sections on this page use a non-flat transition (wave / diagonal / curve / overlap / color band)
+   - [ ] **Depth technique**: At least 1 section uses a technique from `depth-and-blend.md` (noise grain, blend mode, glass, duotone, parallax, or overlapping element)
+   - [ ] **Overlapping element**: At least 1 element breaks its section boundary via negative margin, absolute overflow, or z-axis layering
+   - [ ] **Signature moves**: All moves from the design brief that are designated for this page appear
+   - [ ] **Hover states**: All interactive cards and links use a pattern from `references/interactions.md` — not `opacity: 0.8`
+   - [ ] **Section background variation**: No more than 2 consecutive sections have the same background — verify color bands / dark sections / tinted panels alternate with flat sections
+   - [ ] **Concept-driven hero copy**: The hero headline must reflect the creative concept sentence from the brief — not a generic industry tagline. If the concept is "a logistics company with the restraint of a Swiss watchmaker's archive," the headline should evoke precision/restraint, not "Fast & Reliable Shipping." Rewrite if the copy is generic.
+   - [ ] **Custom cursor** *(Luxury, Dark/Moody, Editorial, Retro-Futuristic, Minimal/Clean only)*: Add the custom cursor script from `skills/animate/references/interactions.md` to `src/layouts/Base.astro`. This is a defining premium signal — a small branded dot with lag that expands over interactive elements. Add only if the archetype is in this list; skip for Organic/Natural, Soft/Pastel, Coastal/Airy, Playful.
+6. Update page `status` to `"complete"` in `.claude/build-state.json`
+7. Update PLAN.md: check off `- [ ] Build [Page] page` → `- [x] Build [Page] page`
+8. `git commit -m "feat: build [page-id] page"`
 
 ## Phase 3 — SEO Pass
 

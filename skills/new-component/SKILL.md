@@ -17,6 +17,18 @@ Creates self-contained Astro components with TypeScript Props interface, scoped 
 3. Check the brief's **Typography Composition** section. If this component contains a primary heading, apply the specified `clamp()` display size, tracking, and weight contrast. Apply the type risk move if this is the Hero component.
 4. Check the brief's **Visual Motif** entry. If this component is a prominent or repeated element (hero, feature card, section header, nav, stat block), the motif should appear in or on it. The motif is a structural commitment — if it's absent from prominent components, the concept exists only in the brief.
 
+## Required declaration before writing code
+
+**State all three of these before writing any HTML or CSS for Hero, feature card, or any above-the-fold component.**
+
+```
+Depth technique: [specific technique from depth-and-blend.md] — [applies to: which element]
+Hover state: [flood fill / underline draw / card tilt / scale+shadow / glow / custom] — [applies to: which element]
+Shape break: [overlapping element / clip-path polygon / irregular border / none if justified]
+```
+
+Skip this declaration only for utility components (forms, footers, nav) where none apply.
+
 ## Requirements
 
 Every component created by this skill must:

@@ -10,6 +10,14 @@ paths:
 
 Adds a complete blog to an Astro 6.3 site: content collection, listing page with pagination, individual post page, and RSS feed.
 
+## Before Writing Any Files
+
+**Call the `sequentialthinking` MCP tool** to plan the build sequence:
+- Check whether `src/content.config.ts` already exists (existing file needs merging, not overwriting)
+- Confirm the correct Astro 6.3 patterns: `render()` function, `entry.id` not `post.slug`, `getCollection`
+- Order the 5 files by dependency (config → data → pages → feed)
+- Flag any pagination decisions (default page size, URL structure)
+
 ## What Gets Created
 
 1. `src/content.config.ts` — blog collection using Content Layer API

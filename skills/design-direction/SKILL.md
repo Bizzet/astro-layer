@@ -29,6 +29,13 @@ Ask the user four questions (can be answered in one message):
 
 **Read `references/concept-formation.md` before this step.**
 
+**Call the `sequentialthinking` MCP tool** to explore concept angles before committing to one. Think through:
+- The cliché — the most predictable design for this industry
+- 3–5 unexpected parallels from other worlds that share the same essential quality as the brand adjectives
+- Which parallel creates the most productive tension with the adjectives
+- A draft tension sentence for the top 2 candidates
+Use the output to select and write the final concept sentence below.
+
 Before choosing an archetype, form a **single-sentence creative concept** that captures the idea behind this design — not what the client does, but the unexpected angle that makes this site worth looking at.
 
 A concept creates productive tension between two things that don't normally belong together. It must be:
@@ -46,6 +53,26 @@ Present the concept as: `Concept: [one sentence]`
 
 Example output:
 > `Concept: A logistics company with the visual restraint of a Swiss watchmaker's archive — precision as identity, not decoration.`
+
+**Concept quality gate — run before proceeding to Step 3.**
+
+Score the concept against all three tests. If any test fails, revise the concept and re-score before moving on. Do not proceed with a failing concept — it is the single biggest upstream cause of generic output.
+
+| Test | Pass condition | Fail signal |
+|---|---|---|
+| **Specific** | You can name a color territory, a type treatment, or a layout move from the sentence alone | "modern and professional" — no visual decision possible |
+| **Surprising** | Someone reading it would not have predicted it from the industry name | "a bakery that feels warm and artisanal" — fully predictable |
+| **Honest** | It serves the brand adjectives provided, not a random clever reference | Concept references "Soviet propaganda" for a spa — clever but dishonest to "calm, restorative" adjectives |
+
+Show the result as:
+```
+Concept quality check:
+- Specific: [pass/fail — one sentence why]
+- Surprising: [pass/fail — one sentence why]
+- Honest: [pass/fail — one sentence why]
+```
+
+If any test fails, write: `Revising concept:` and show the new version, then re-run the quality check on it.
 
 ### Step 3 — Choose an archetype
 

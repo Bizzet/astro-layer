@@ -488,6 +488,260 @@ const { prefix, cycleWords, subheadline, ctaPrimary, eyebrow } = Astro.props;
 
 ---
 
+### Hero — Variant F: Diagonal Clip Split
+
+Full-height hero split by a diagonal clip-path. Text on a dark/brand side, image on a light side. The diagonal cut is the shape — it creates motion without animation. No JS.
+
+**Best for:** Luxury/Refined, Dark/Moody, Retro-Futuristic, Art Deco/Geometric, Tech-Industrial.
+
+```astro
+---
+import { Image } from 'astro:assets';
+interface Props {
+  headline: string;
+  subheadline: string;
+  ctaPrimary: { label: string; href: string };
+  eyebrow?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+const { headline, subheadline, ctaPrimary, eyebrow, image, imageAlt } = Astro.props;
+---
+<section class="hero hero--diagonal" transition:animate="fade">
+  <div class="hero-diagonal-bg" aria-hidden="true"></div>
+  <div class="container hero-diagonal-inner">
+    <div class="hero-diagonal-content">
+      {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+      <h1>{headline}</h1>
+      <p class="hero-sub">{subheadline}</p>
+      <a href={ctaPrimary.href} class="btn btn--primary">{ctaPrimary.label}</a>
+    </div>
+    {image && (
+      <div class="hero-diagonal-media">
+        <Image src={image} alt={imageAlt ?? ''} width={700} height={800}
+          fetchpriority="high" loading="eager" class="hero-diagonal-image" />
+      </div>
+    )}
+  </div>
+</section>
+```
+
+```css
+.hero--diagonal {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  overflow: hidden;
+}
+
+/* Dark panel covering left ~55%, cut diagonally on the right */
+.hero-diagonal-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--color-neutral-900);
+  clip-path: polygon(0 0, 62% 0, 48% 100%, 0 100%);
+  z-index: 0;
+}
+
+.hero-diagonal-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: var(--space-20);
+}
+
+.hero-diagonal-content {
+  padding-right: var(--space-16);
+  color: var(--color-neutral-100);
+}
+
+.hero-eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brand);
+  margin-bottom: var(--space-6);
+}
+
+.hero--diagonal h1 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-bold);
+  color: inherit;
+  margin-bottom: var(--space-6);
+}
+
+.hero--diagonal .hero-sub {
+  font-size: var(--text-lg);
+  opacity: 0.75;
+  line-height: var(--leading-relaxed);
+  max-width: 34rem;
+  margin-bottom: var(--space-8);
+}
+
+.hero-diagonal-media {
+  padding-left: var(--space-8);
+  display: flex;
+  align-items: center;
+}
+
+.hero-diagonal-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7/8;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 48rem) {
+  .hero-diagonal-bg { clip-path: polygon(0 0, 100% 0, 100% 48%, 0 62%); }
+  .hero-diagonal-inner { grid-template-columns: 1fr; gap: var(--space-10); }
+  .hero-diagonal-content { padding-right: 0; padding-top: var(--space-16); }
+  .hero-diagonal-media { padding-left: 0; }
+}
+```
+
+---
+
+### Hero — Variant G: Oversized Type with Bleeding Media
+
+Single word or short phrase at viewport-scale, with a photo or graphic element that bleeds out of the grid and overlaps the type. The image intrudes on the headline — a deliberate collision. No symmetry, no padding safety.
+
+**Best for:** Brutalist, Editorial, Luxury/Refined, Art Deco/Geometric.
+
+```astro
+---
+import { Image } from 'astro:assets';
+interface Props {
+  headline: string;
+  subheadline: string;
+  ctaPrimary: { label: string; href: string };
+  eyebrow?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+const { headline, subheadline, ctaPrimary, eyebrow, image, imageAlt } = Astro.props;
+const [word1, ...rest] = headline.split(' ');
+const restWords = rest.join(' ');
+---
+<section class="hero hero--bleed" transition:animate="fade">
+  <div class="hero-bleed-inner">
+    {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+    <div class="hero-bleed-layout">
+      <h1 class="hero-bleed-headline" aria-label={headline}>
+        <span class="bleed-word-1">{word1}</span>
+        {restWords && <span class="bleed-word-2">{restWords}</span>}
+      </h1>
+      {image && (
+        <div class="hero-bleed-media" aria-hidden="true">
+          <Image src={image} alt={imageAlt ?? ''} width={500} height={650}
+            fetchpriority="high" loading="eager" class="hero-bleed-image" />
+        </div>
+      )}
+    </div>
+    <div class="hero-bleed-footer">
+      <p class="hero-sub">{subheadline}</p>
+      <a href={ctaPrimary.href} class="btn btn--primary">{ctaPrimary.label}</a>
+    </div>
+  </div>
+</section>
+```
+
+```css
+.hero--bleed {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8) var(--container-padding) var(--space-12);
+  overflow: hidden;
+}
+
+.hero-bleed-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-bleed-layout {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-bleed-headline {
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+}
+
+.bleed-word-1,
+.bleed-word-2 {
+  display: block;
+  font-size: clamp(5rem, 16vw, 14rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  font-weight: var(--font-bold);
+}
+
+/* Second word shifts right — creates asymmetric composition */
+.bleed-word-2 {
+  padding-left: clamp(3rem, 12vw, 14rem);
+  color: var(--color-brand); /* or: font-style: italic; font-weight: 200; */
+}
+
+/* Image intrudes over the headline from the right */
+.hero-bleed-media {
+  position: absolute;
+  right: calc(-1 * var(--container-padding));
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(18rem, 35vw, 28rem);
+  z-index: 2;
+}
+
+.hero-bleed-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5/6.5;
+  object-fit: cover;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-bleed-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: var(--border);
+  flex-wrap: wrap;
+}
+
+.hero-bleed-footer .hero-sub {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  max-width: 32rem;
+}
+
+@media (max-width: 48rem) {
+  .bleed-word-1, .bleed-word-2 { font-size: clamp(3.5rem, 16vw, 6rem); }
+  .bleed-word-2 { padding-left: var(--space-8); }
+  .hero-bleed-media { position: static; transform: none; width: 100%; margin-top: var(--space-8); }
+  .hero-bleed-image { border-radius: var(--radius-lg); }
+  .hero-bleed-footer { flex-direction: column; align-items: flex-start; }
+}
+```
+
+---
+
 ## Services
 
 **Purpose:** Display service offerings in a scannable layout.
@@ -851,6 +1105,117 @@ const rest = services.filter(s => s !== featured);
 @media (max-width: 48rem) {
   .service-feature { grid-template-columns: 1fr; }
   .service-feature-media { order: -1; }
+}
+```
+
+---
+
+### Services — Variant E: Horizontal Scroll Gallery
+
+Services laid out in a horizontal scroll track — the user scrolls right to reveal additional items. Each card is taller than wide, with the title and icon large. Creates a sense of depth and sequence that a grid can't match.
+
+**Best for:** Dark/Moody, Retro-Futuristic, Luxury/Refined, Brutalist.
+
+```astro
+<section class="services services--gallery" transition:animate="fade">
+  <div class="container services-gallery-header">
+    {headline && <h2>{headline}</h2>}
+    <p class="services-gallery-hint" aria-hidden="true">Scroll to explore →</p>
+  </div>
+  <div class="services-gallery-track" role="list" aria-label="Services">
+    {services.map((service, i) => (
+      <article role="listitem" class="service-gallery-card">
+        <span class="service-gallery-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="service-gallery-icon" aria-hidden="true">{service.icon}</span>
+        <h3>{service.title}</h3>
+        <p>{service.description}</p>
+        {service.href && <a href={service.href} class="service-link">Explore →</a>}
+      </article>
+    ))}
+  </div>
+</section>
+```
+
+```css
+.services--gallery { padding-block: var(--space-20); overflow: hidden; }
+
+.services-gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-10);
+}
+
+.services-gallery-header h2 { font-size: var(--text-3xl); letter-spacing: var(--tracking-tight); }
+
+.services-gallery-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  letter-spacing: var(--tracking-wide);
+}
+
+.services-gallery-track {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-inline: var(--container-padding);
+  padding-bottom: var(--space-4);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.services-gallery-track::-webkit-scrollbar { display: none; }
+
+.service-gallery-card {
+  flex: 0 0 min(22rem, 78vw);
+  scroll-snap-align: start;
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 28rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+.service-gallery-card:hover { transform: translateY(-4px); }
+
+.service-gallery-num {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  color: var(--color-brand);
+  opacity: 0.15;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.service-gallery-icon {
+  font-size: var(--text-3xl);
+  display: block;
+  margin-bottom: var(--space-6);
+}
+
+.service-gallery-card h3 {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+.service-gallery-card p {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  flex: 1;
+  margin-bottom: var(--space-8);
 }
 ```
 
