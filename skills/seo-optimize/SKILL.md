@@ -10,6 +10,12 @@ paths:
 
 Adds or improves SEO metadata, Open Graph tags, and structured data for Astro pages.
 
+> **Local SEO location pages** (service area pages, nearby city pages) are handled by the separate `local-seo-pages` skill.
+
+## Before Writing Any Files
+
+**Call the `sequentialthinking` MCP tool** to plan the audit sequence across existing pages.
+
 ## Per-Page Requirements
 
 Every page must have:

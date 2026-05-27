@@ -149,3 +149,9 @@ Core Web Vitals affect rankings:
 - LCP: use `fetchpriority="high"` on hero image, `loading="eager"`
 - CLS: always provide explicit `width` and `height` on images
 - FID/INP: minimize JavaScript, prefer CSS-only solutions
+
+---
+
+## Local SEO Pages
+
+Handled by the `local-seo-pages` skill. See [skills/local-seo-pages/references/local-seo-patterns.md](../../local-seo-pages/references/local-seo-patterns.md) for the full `locations.ts` schema, page templates, `LocationCard` component, and JSON-LD patterns (BreadcrumbList, multi-city areaServed, `@graph` wrapper).
